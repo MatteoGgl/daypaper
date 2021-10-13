@@ -59,7 +59,6 @@ func (app *App) getRandomPhoto() (*photo, error) {
 	}
 
 	apiURL, err := joinURLWithQuery(app.opts.Endpoint, qs)
-	fmt.Println(apiURL)
 	if err != nil {
 		return nil, err
 	}
