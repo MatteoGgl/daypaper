@@ -42,7 +42,7 @@ The simplest way to activate daypaper is to run it every hour:
 ```bash
 $: crontab -e
 
-0 * * * * ~/go/bin/daypaper > ~/.daypaper.log
+0 * * * * ~/go/bin/daypaper >> ~/.daypaper.log 2>&1
 ```
 
 Daypaper will contact the API only when needed (i.e. the current day period has changed).
