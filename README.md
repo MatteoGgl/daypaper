@@ -33,6 +33,7 @@ Usage:
   daypaper [OPTIONS]
 
 Application Options:
+  -c, --credit                                      Displays the current wallpaper author and link
   -f, --force                                       Forces a wallpaper refresh even when in the same time span
   -t, --time=[morning|noon|afternoon|evening|night] Specify a particular time of day
   -s, --search=                                     Additional text query to be added while searching
@@ -82,7 +83,7 @@ return "night"
 
 ## Like your wallpaper?
 
-Find out who shot it by looking in `~/.config/daypaper/credits.txt`!
+Find out details on who shot it by using `daypaper -c`!
 
 ## Can Daypaper please do x feature/support my DE?
 

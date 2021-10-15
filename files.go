@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -92,6 +93,17 @@ func (app *App) saveCredits(p *photo) error {
 	}
 
 	w.Flush()
+	return nil
+}
+
+func (app *App) showCredits() error {
+	c, err := ioutil.ReadFile(filepath.Join(app.config.ConfigPath, "credits.txt"))
+	if err != nil {
+		return ErrNoToken
+	}
+
+	fmt.Fprintln(os.Stdout, string(c))
+
 	return nil
 }
 

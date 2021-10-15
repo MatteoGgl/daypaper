@@ -11,6 +11,7 @@ type App struct {
 		Token      string
 	}
 	opts struct {
+		Credit      bool   `short:"c" long:"credit" description:"Displays the current wallpaper author and link"`
 		Force       bool   `short:"f" long:"force" description:"Forces a wallpaper refresh even when in the same time span"`
 		Time        string `short:"t" long:"time" description:"Specify a particular time of day" choice:"morning" choice:"noon" choice:"afternoon" choice:"evening" choice:"night"`
 		Search      string `short:"s" long:"search" description:"Additional text query to be added while searching"`
@@ -34,6 +35,15 @@ func main() {
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
+	}
+
+	if app.opts.Credit {
+		err = app.showCredits()
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		os.Exit(0)
 	}
 
 	if app.opts.Force || app.shouldRefresh() {
