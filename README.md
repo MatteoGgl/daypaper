@@ -2,6 +2,14 @@
 
 Daypaper sets your GNOME wallpaper based on the time of day from a random and relevant [Unsplash](https://unsplash.com) image.
 
+The retrieved image is random and the default query will be the time of day as defined by daypaper. If the user specifies additional search terms, they will be appendend to the original query.
+
+Additionally, the results are filtered by what Unsplash calls "Topics"; basically curated collections of photos. The selected topics right now are:
+
+- Textures & Patterns
+- Arts & Culture
+- Wallpapers
+
 ## Installation
 
 1. You will need an Access Token from Unsplash: create an app [here](https://unsplash.com/oauth/applications/new) after registration.
