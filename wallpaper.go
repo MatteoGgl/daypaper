@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/url"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
@@ -38,7 +39,20 @@ func (app *App) setWallpaper() error {
 
 	app.saveTime()
 
-	err = exec.Command("gsettings", "set", "org.gnome.desktop.background", "picture-uri", strconv.Quote("file://"+downloadedPhotoPath)).Run()
+	cmd := exec.Command("gsettings", "set", "org.gnome.desktop.background", "picture-uri", strconv.Quote("file://"+downloadedPhotoPath))
+
+	if os.Getenv(REQUIRED_ENV) == "" {
+		env := cmd.Env
+		env = append(env, REQUIRED_ENV+"="+app.opts.DBUSEnv)
+		env = append(env, "DISPLAY=:0")
+		cmd.Env = env
+	}
+
+	cmd.Stdout = os.Stdout
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+
+	err = cmd.Run()
 	if err != nil {
 		return err
 	}

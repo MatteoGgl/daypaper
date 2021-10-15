@@ -11,6 +11,10 @@ import (
 	"github.com/jessevdk/go-flags"
 )
 
+const REQUIRED_ENV string = "DBUS_SESSION_BUS_ADDRESS"
+
+var ErrNoRequiredDBUSEnv = errors.New("daypaper requires the -d option to be set when running through cronjob")
+
 func (app *App) newConfig() error {
 	userConfigPath, err := os.UserConfigDir()
 	if err != nil {
@@ -47,6 +51,10 @@ func (app *App) parseOpts() error {
 			}
 		}
 		return err
+	}
+
+	if os.Getenv(REQUIRED_ENV) == "" && app.opts.DBUSEnv == "" {
+		return ErrNoRequiredDBUSEnv
 	}
 
 	return nil

@@ -18,6 +18,7 @@ type App struct {
 		Extension   string `short:"e" long:"ext" description:"The downloaded image extension" default:"jpg"`
 		ScreenWidth string `short:"w" long:"width" description:"The downloaded image width" default:"1920"`
 		Endpoint    string `short:"a" long:"api" description:"The API endpoint" default:"https://api.unsplash.com/photos/random"`
+		DBUSEnv     string `short:"d" long:"dbus" description:"Set this variable to the value of $DBUS_SESSION_BUS_ADDRESS; only needed when running through cronjob" `
 	}
 }
 
@@ -26,19 +27,19 @@ func main() {
 
 	err := app.newConfig()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 	err = app.parseOpts()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 
 	if app.opts.Force || app.shouldRefresh() {
 		err = app.setWallpaper()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 	}
