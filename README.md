@@ -40,17 +40,25 @@ Application Options:
   -e, --ext=                                        The downloaded image extension (default: jpg)
   -w, --width=                                      The downloaded image width (default: 1920)
   -a, --api=                                        The API endpoint (default: https://api.unsplash.com/photos/random)
+  -d, --dbus=                                       Set this variable to the value of $DBUS_SESSION_BUS_ADDRESS; only needed when running through cronjob
 
 Help Options:
   -h, --help                                        Show this help message
 ```
 
-The simplest way to activate daypaper is to run it every hour:
+You can activate daypaper manually. If you don't like the random photo downloaded for this time span, you can always force a new download or specify a different time. You can even add search terms to further customize your results.
+
+The simplest way to activate daypaper automatically is to run it every hour. You will need to specify the contents of your env variable DBUS_SESSION_BUS_ADDRESS: it's required by `gsettings` to correctly set the wallpaper. It's not available inside cronjobs because they work with a reduced set of env variables. To find out it's value type:
+```bash
+$: echo $DBUS_SESSION_BUS_ADDRESS
+```
+
+Then pass it as an option:
 
 ```bash
 $: crontab -e
 
-0 * * * * ~/go/bin/daypaper >> ~/.daypaper.log 2>&1
+0 * * * * ~/go/bin/daypaper --dbus="WHATEVER_THE_VALUE_IS" >> ~/.daypaper.log 2>&1
 ```
 
 Daypaper will contact the API only when needed (i.e. the current day period has changed).
