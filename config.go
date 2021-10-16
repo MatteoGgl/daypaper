@@ -73,13 +73,13 @@ func (app *App) readToken() error {
 func (app *App) getCurrentDaytime() string {
 	h := time.Now().Hour()
 
-	if h >= 7 && h <= 11 {
+	if h >= 6 && h <= 10 {
 		return "morning"
-	} else if h >= 12 && h <= 14 {
+	} else if h >= 11 && h <= 13 {
 		return "noon"
-	} else if h >= 15 && h <= 17 {
+	} else if h >= 14 && h <= 17 {
 		return "afternoon"
-	} else if h >= 18 && h <= 21 {
+	} else if h >= 18 && h <= 20 {
 		return "evening"
 	}
 

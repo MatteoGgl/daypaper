@@ -68,14 +68,14 @@ The periods are defined like this:
 ```go
 h := time.Now().Hour()
 
-if h >= 7 && h <= 11 {
-    return "morning"
-} else if h >= 12 && h <= 14 {
-    return "noon"
-} else if h >= 15 && h <= 17 {
-    return "afternoon"
-} else if h >= 18 && h <= 21 {
-    return "evening"
+if h >= 6 && h <= 10 {
+  return "morning"
+} else if h >= 11 && h <= 13 {
+  return "noon"
+} else if h >= 14 && h <= 17 {
+  return "afternoon"
+} else if h >= 18 && h <= 20 {
+  return "evening"
 }
 
 return "night"
