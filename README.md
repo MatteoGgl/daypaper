@@ -1,5 +1,7 @@
 # Daypaper
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/matteoggl/daypaper)](https://goreportcard.com/report/github.com/matteoggl/daypaper)
+
 Daypaper sets your GNOME wallpaper based on the time of day from a random and relevant [Unsplash](https://unsplash.com) image.
 
 The retrieved image is random and the default query will be the time of day as defined by daypaper. If the user specifies additional search terms, they will be appendend to the original query.
