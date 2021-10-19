@@ -1,0 +1,27 @@
+project_name: daypaper
+builds:
+  - 
+    ldflags: -s -w -X main.buildTime={{ .Date }} -X main.version={{ .Version }}+{{ .ShortCommit }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+archives:
+  - id: tars
+    replacements:
+      arm64: arm64v6
+    format: tar.gz
+  - id: zips
+    replacements:
+      arm64: arm64v6
+    format: zip
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

@@ -5,12 +5,18 @@ import (
 	"os"
 )
 
+var (
+	version   string
+	buildTime string
+)
+
 type App struct {
 	config struct {
 		ConfigPath string
 		Token      string
 	}
 	opts struct {
+		Version     bool   `short:"v" long:"version" description:"Displays version and build info"`
 		Credit      bool   `short:"c" long:"credit" description:"Displays the current wallpaper author and link"`
 		Force       bool   `short:"f" long:"force" description:"Forces a wallpaper refresh even when in the same time span"`
 		Time        string `short:"t" long:"time" description:"Specify a particular time of day" choice:"morning" choice:"noon" choice:"afternoon" choice:"evening" choice:"night"`
@@ -26,15 +32,15 @@ type App struct {
 func main() {
 	app := &App{}
 
-	err := app.newConfig()
+	err := app.parseOpts()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	err = app.parseOpts()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+
+	if app.opts.Version {
+		fmt.Printf("Version:\t%s\n", version)
+		fmt.Printf("Build time:\t%s\n", buildTime)
+		os.Exit(0)
 	}
 
 	if app.opts.Credit {
@@ -44,6 +50,12 @@ func main() {
 			os.Exit(1)
 		}
 		os.Exit(0)
+	}
+
+	err = app.newConfig()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 
 	if app.opts.Force || app.shouldRefresh() {

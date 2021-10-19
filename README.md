@@ -14,6 +14,12 @@ Additionally, the results are filtered by what Unsplash calls "Topics"; basicall
 
 ## Installation
 
+You can either:
+- Build daypaper from source; clone this repo and run `make build`.
+- Download and run the latest binary from the [releases page](https://github.com/MatteoGgl/daypaper/releases).
+
+## Configuration
+
 1. You will need an Access Token from Unsplash: create an app [here](https://unsplash.com/oauth/applications/new) after registration.
 2. Create the necessary configuration files:
 
@@ -23,8 +29,6 @@ touch ~/.config/daypaper/.token
 ```
 
 3. Paste your Access Token inside `.token`
-4. Clone this repository
-5. Run `go install`
 4. You're ready to go!
 
 ## Usage

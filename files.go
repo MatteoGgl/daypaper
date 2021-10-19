@@ -12,7 +12,9 @@ import (
 	"path/filepath"
 )
 
-var ErrNoToken = errors.New("cannot find .token")
+var (
+	ErrNoToken = errors.New("cannot find .token")
+)
 
 func (app *App) downloadPhoto(p *photo) (string, error) {
 	downloadPath := filepath.Join(app.config.ConfigPath, p.ID+"."+app.opts.Extension)
@@ -99,7 +101,7 @@ func (app *App) saveCredits(p *photo) error {
 func (app *App) showCredits() error {
 	c, err := ioutil.ReadFile(filepath.Join(app.config.ConfigPath, "credits.txt"))
 	if err != nil {
-		return ErrNoToken
+		return err
 	}
 
 	fmt.Fprintln(os.Stdout, string(c))
