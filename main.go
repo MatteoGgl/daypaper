@@ -43,6 +43,12 @@ func main() {
 		os.Exit(0)
 	}
 
+	err = app.newConfig()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
 	if app.opts.Credit {
 		err = app.showCredits()
 		if err != nil {
@@ -50,12 +56,6 @@ func main() {
 			os.Exit(1)
 		}
 		os.Exit(0)
-	}
-
-	err = app.newConfig()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
 	}
 
 	if app.opts.Force || app.shouldRefresh() {
