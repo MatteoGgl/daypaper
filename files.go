@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	ErrNoToken = errors.New("cannot find .token")
+	errNoToken = errors.New("cannot find .token")
 )
 
-func (app *App) downloadPhoto(p *photo) (string, error) {
+func (app *app) downloadPhoto(p *photo) (string, error) {
 	downloadPath := filepath.Join(app.config.ConfigPath, p.ID+"."+app.opts.Extension)
 
 	qs := url.Values{
@@ -50,7 +50,7 @@ func (app *App) downloadPhoto(p *photo) (string, error) {
 	return downloadPath, nil
 }
 
-func (app *App) cleanUnusedFiles(toPreserve string) error {
+func (app *app) cleanUnusedFiles(toPreserve string) error {
 	files, err := os.ReadDir(app.config.ConfigPath)
 	if err != nil {
 		return err
@@ -65,7 +65,7 @@ func (app *App) cleanUnusedFiles(toPreserve string) error {
 	return nil
 }
 
-func (app *App) saveTime() error {
+func (app *app) saveTime() error {
 	out, err := os.Create(filepath.Join(app.config.ConfigPath, app.getCurrentDaytime()))
 	if err != nil {
 		return err
@@ -75,7 +75,7 @@ func (app *App) saveTime() error {
 	return nil
 }
 
-func (app *App) saveCredits(p *photo) error {
+func (app *app) saveCredits(p *photo) error {
 	f, err := os.Create(filepath.Join(app.config.ConfigPath, "credits.txt"))
 	if err != nil {
 		return err
@@ -98,7 +98,7 @@ func (app *App) saveCredits(p *photo) error {
 	return nil
 }
 
-func (app *App) showCredits() error {
+func (app *app) showCredits() error {
 	c, err := ioutil.ReadFile(filepath.Join(app.config.ConfigPath, "credits.txt"))
 	if err != nil {
 		return err
@@ -109,7 +109,7 @@ func (app *App) showCredits() error {
 	return nil
 }
 
-func (app *App) shouldRefresh() bool {
+func (app *app) shouldRefresh() bool {
 	f, err := os.Open(filepath.Join(app.config.ConfigPath, app.getCurrentDaytime()))
 	if err != nil {
 		return true

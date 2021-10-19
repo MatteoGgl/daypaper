@@ -10,7 +10,7 @@ var (
 	buildTime string
 )
 
-type App struct {
+type app struct {
 	config struct {
 		ConfigPath string
 		Token      string
@@ -30,7 +30,7 @@ type App struct {
 }
 
 func main() {
-	app := &App{}
+	app := &app{}
 
 	err := app.parseOpts()
 	if err != nil {

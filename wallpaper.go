@@ -23,7 +23,7 @@ type photo struct {
 	}
 }
 
-func (app *App) setWallpaper() error {
+func (app *app) setWallpaper() error {
 	p, err := app.getRandomPhoto()
 	if err != nil {
 		return err
@@ -41,9 +41,9 @@ func (app *App) setWallpaper() error {
 
 	cmd := exec.Command("gsettings", "set", "org.gnome.desktop.background", "picture-uri", strconv.Quote("file://"+downloadedPhotoPath))
 
-	if os.Getenv(REQUIRED_ENV) == "" {
+	if os.Getenv(requiredEnv) == "" {
 		env := cmd.Env
-		env = append(env, REQUIRED_ENV+"="+app.opts.DBUSEnv)
+		env = append(env, requiredEnv+"="+app.opts.DBUSEnv)
 		env = append(env, "DISPLAY=:0")
 		cmd.Env = env
 	}
@@ -60,7 +60,7 @@ func (app *App) setWallpaper() error {
 	return nil
 }
 
-func (app *App) getRandomPhoto() (*photo, error) {
+func (app *app) getRandomPhoto() (*photo, error) {
 	c := http.DefaultClient
 
 	qs := url.Values{

@@ -11,11 +11,11 @@ import (
 	"github.com/jessevdk/go-flags"
 )
 
-const REQUIRED_ENV string = "DBUS_SESSION_BUS_ADDRESS"
+const requiredEnv string = "DBUS_SESSION_BUS_ADDRESS"
 
-var ErrNoRequiredDBUSEnv = errors.New("daypaper requires the -d option to be set when running through cronjob")
+var errNoRequiredDBUSEnv = errors.New("daypaper requires the -d option to be set when running through cronjob")
 
-func (app *App) newConfig() error {
+func (app *app) newConfig() error {
 	userConfigPath, err := os.UserConfigDir()
 	if err != nil {
 		return err
@@ -41,7 +41,7 @@ func (app *App) newConfig() error {
 	return nil
 }
 
-func (app *App) parseOpts() error {
+func (app *app) parseOpts() error {
 	_, err := flags.Parse(&app.opts)
 	if err != nil {
 		var e *flags.Error
@@ -53,24 +53,24 @@ func (app *App) parseOpts() error {
 		return err
 	}
 
-	if os.Getenv(REQUIRED_ENV) == "" && app.opts.DBUSEnv == "" {
-		return ErrNoRequiredDBUSEnv
+	if os.Getenv(requiredEnv) == "" && app.opts.DBUSEnv == "" {
+		return errNoRequiredDBUSEnv
 	}
 
 	return nil
 }
 
-func (app *App) readToken() error {
+func (app *app) readToken() error {
 	c, err := ioutil.ReadFile(filepath.Join(app.config.ConfigPath, ".token"))
 	if err != nil {
-		return ErrNoToken
+		return errNoToken
 	}
 
 	app.config.Token = strings.TrimSuffix(string(c), "\n")
 	return nil
 }
 
-func (app *App) getCurrentDaytime() string {
+func (app *app) getCurrentDaytime() string {
 	h := time.Now().Hour()
 
 	if h >= 6 && h <= 10 {
@@ -86,7 +86,7 @@ func (app *App) getCurrentDaytime() string {
 	return "night"
 }
 
-func (app *App) getDaytimeForDownload() string {
+func (app *app) getDaytimeForDownload() string {
 	if app.opts.Time != "" {
 		return app.opts.Time
 	}
